@@ -9,7 +9,7 @@ namespace Negocio
 {
     public class Materia
     {
-        public static Modelo.Result MostrarTodasLasMaterias(Modelo.Materia materia)
+        public static Modelo.Result MostrarTodasLasMaterias()
         {
             Modelo.Result result = new Modelo.Result();
             try
@@ -22,14 +22,15 @@ namespace Negocio
                     {
                         foreach (var row in materias)
                         {
-                            Modelo.Materia materia1 = new Modelo.Materia();
+                            Modelo.Materia materia = new Modelo.Materia();
 
-                            materia1.IdMateria = row.IdMateria;
-                            materia1.Nombre = row.Nombre;
-                            materia1.Costo = row.Costo.Value;
+                            materia.IdMateria = row.IdMateria;
+                            materia.Nombre = row.Nombre;
+                            materia.Costo = row.Costo.Value;
+                            materia.Descripcion = row.Descripcion;
 
 
-                            result.Objects.Add(materia1);
+                            result.Objects.Add(materia);
 
                         }
                         result.Correct = true;

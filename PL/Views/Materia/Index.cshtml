@@ -2,38 +2,57 @@
 @{
     ViewBag.Title = "Index";
 }
+
+<br />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="~/js//MateriaCRUD.js"></script>
+
+<br />
 <section class="resume-section" id="Materias">
+
    <div class="resume-section-content">
         <h2 class="text-center"> Listado de <span class="text-primary"> Materias </span> </h2>
+
+        @*@foreach (Modelo.Materia materia in Model.Materias)
+        {
+
+        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+            <div class="flex-grow-1">
+                <h3 class="mb-0"> @materia.Nombre</h3>
+                <div class="subheading mb-3"> Semestral </div>
+                <p> @materia.Descripcion </p>
+            </div>
+
+            <div class="flex-shrink-0"><span class="text-primary"> Costo: $ @materia.Costo </span></div>
+        </div>
+
+        }*@
+    
 
         <div class="row">
             <div class="col-auto ms-auto">
                 <button class="btn btn-primary" onclick="Modal(null)" style="color: ivory">
-                    <i class="fa-solid fa-book fa-beat"></i>         
+                    <i class="fa-solid fa-book fa-beat"></i>
                     Agregar Materia
                 </button>
             </div>
         </div>
 
-        @foreach (Modelo.Materia materia in Model.Materias)
-        {
-            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                <div class="flex-grow-1">
-                    <h3 class="mb-0"> @materia.Nombre</h3>
-                    <div class="subheading mb-3"> Semestral </div>
-                    <p> Conocimiento de la lengua española en forma oral y escrita para que el alumno maneje el vocabulario, la sintaxis (forma en que se conjugan las palabras) y la gramática (estudio de las reglas y principios que regulan el uso de las lenguas y la organización de las palabras dentro de una oración).
-                    </p>
+        <table id="tblContent" class="table table-hover" border="1">
+            <thead>
+                 <tr>
+                        <th class="text-center" scope="col">Editar</th>
+                        <th class="text-center" scope="col">Nombre</th>
+                        <th class="text-center" scope="col">Costo</th>
+                        <th class="text-center" scope="col">Descripcion</th>
+                        <th class="text-center" scope="col">Eliminar</th>
+                    </tr>
 
-                    <td class="text-center"><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Formulario", "Materia", new { IdMateria = materia.IdMateria})"> Actualizar <i class="bi bi-pencil-square" style="color: ivory"></i></a></td>
-                    <td class="text-center"><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Materia", new { IdMateria = materia.IdMateria})" onclick="return confirm('Estas seguro que deseas eliminar este alumno?');"> Eliminar  <i class="bi bi-eraser-fill" style="color: mintcream"></i></a></td>
+            </thead>
+            <tbody> </tbody>
+        </table>
 
-                </div>
-                <div class="flex-shrink-0"><span class="text-primary"> Costo: $ @materia.Costo </span></div>
-            </div>
-        }
-       
-   </div>
-
+    </div>
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -52,38 +71,34 @@
                                 <div class="row justify-content-center">
                                     <div class="col-lg-8 col-xl-7">
                                         <!-- to get an API token!-->
-                                         @using (Html.BeginForm("Formulario", "Materia", FormMethod.Post, new { enctype = "multipart/form-data", @id = "contactForm" }))
-                                        {
+                                        @* @using (Html.BeginForm("Formulario", "Materia", FormMethod.Post, new { enctype = "multipart/form-data", @id = "contactForm" }))
+                                        {*@
 
                                         <div class="form-floating mb-3" style="display:none">
-                                            @*<input class="form-control" id="nombre" type="text" placeholder="Habid..." data-sb-validations="required" />*@
-
-                                            @Html.TextBoxFor(model => model.IdMateria, new { @class = "form-control", @id="txtIdMateria"})
-                                            <label for="name">IdAlumno</label>
-                                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                           
+                                                <input type="text" class="form-control" id="txtIdMateria" placeholder="Id Materia" readonly />
+                                            <label for="name">IdMateria</label>
+                                            
                                         </div>
-                                        <!-- Nombre input-->
+                                        <!-- Nombre -->
                                         <div class="form-floating mb-3">
-                                            @*<input class="form-control" id="nombre" type="text" placeholder="Habid..." data-sb-validations="required" />*@
-                            
-                                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id="txtNombre"})
+                                      
+                                                <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" />
                                                 <label for="name">Nombre</label>
-                                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                           
                                         </div>
-                                        <!-- Apellido Paterno input-->
+                                        <!-- Costo -->
                                         <div class="form-floating mb-3">
-                                           @* <input class="form-control" id="AP" type="email" placeholder="Lopez" data-sb-validations="required,email" />*@
-                                         
-                                                @Html.TextBoxFor(model => model.Costo, new { @class = "form-control", @id="txtCosto", @type="text"})
+
+                                                <input type="text" class="form-control" id="txtCosto" placeholder="Costo" />
                                                 <label for="email">Costo $ </label>
                                         </div>
-                                        <!-- Apellido Materno input-->
+                                        <!-- Descripcion -->
                                         <div class="form-floating mb-3">
-                                            @*<input class="form-control" id="AM" type="tel" placeholder="Lopez" data-sb-validations="required" />*@
-                                            
-                                                @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control", @id="txtDescripcion"})
+                                           
+                                                <input type="text" class="form-control" id="txtDescripcion" placeholder="Descripcion" />
                                                 <label for="phone">Descripcion</label>
-                                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                                            
                                         </div>
 
                                             <button class="btn btn-primary" id="submitButton" type="submit" data-bs-dismiss="modal">
@@ -96,7 +111,7 @@
 
                                                 Cerrar
                                             </button>
-                                        }
+                                      @*  }*@
                                     </div>
                                 </div>
                             </div>

@@ -7,10 +7,11 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+ 
             Modelo.Materia materia = new Modelo.Materia();
             Modelo.Result result = new Modelo.Result();
 
-            result = Negocio.Materia.MostrarTodasLasMaterias(materia);
+            result = Negocio.Materia.MostrarTodasLasMaterias();
 
             if (result.Correct)
             {
@@ -24,98 +25,98 @@ namespace PL.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult Formulario(int? IdMateria)
-        {
+        //[HttpGet]
+        //public ActionResult Formulario(int? IdMateria)
+        //{
 
-            Modelo.Materia materia = new Modelo.Materia();
+        //    Modelo.Materia materia = new Modelo.Materia();
 
-            if (IdMateria == null)
-            {
-                return View(materia);
-            }
-            else
-            {
-                //GetById
+        //    if (IdMateria == null)
+        //    {
+        //        return View(materia);
+        //    }
+        //    else
+        //    {
+        //        //GetById
 
-                var result = Negocio.Materia.MostrarSoloUnaMateria(IdMateria.Value);
+        //        var result = Negocio.Materia.MostrarSoloUnaMateria(IdMateria.Value);
 
-                if (result.Correct)
-                {
-                    materia = (Modelo.Materia)result.Object;
+        //        if (result.Correct)
+        //        {
+        //            materia = (Modelo.Materia)result.Object;
 
-                }
-                else
-                {
-                    ViewBag.Message = "Ocurrio un error";
-                }
-                return Json(materia);
-            }
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Message = "Ocurrio un error";
+        //        }
+        //        return Json(materia);
+        //    }
 
-        }
+        //}
 
-        [HttpPost]
-        public ActionResult Formulario(Modelo.Materia materia)
-        {
+        //[HttpPost]
+        //public ActionResult Formulario(Modelo.Materia materia)
+        //{
 
-            Modelo.Result result = new Modelo.Result();
-
-          
-            if (materia.IdMateria == 0)
-            {
-                //ADD
-                result = Negocio.Materia.AgregarMateria(materia);
-                if (result.Correct)
-                {
-                    ViewBag.Message = result.Message;
-                    ViewBag.Massage = "Se Agrego correctamente la materia. " + result.Message;
-                }
-                else
-                {
-                    ViewBag.Message = "Error" + result.Message;
-                }
-            }
-            else
-            {
-                //Update
-                result = Negocio.Materia.ActualizarMateria(materia);
-
-                if (result.Correct)
-                {
-                    ViewBag.Massage = "Se actualizo correctamente la materia. " + result.Message;
-                }
-                else
-                {
-                    ViewBag.Massage = "Error: " + result.Message;
-                }
-            }
-            //return PartialView("Modal");
-
-            return View(materia);
-        }
+        //    Modelo.Result result = new Modelo.Result();
 
 
-        public ActionResult Delete(int idMateria)
-        {
-            Modelo.Result result = Negocio.Materia.EliminarMateria(idMateria);
+        //    if (materia.IdMateria == 0)
+        //    {
+        //        //ADD
+        //        result = Negocio.Materia.AgregarMateria(materia);
+        //        if (result.Correct)
+        //        {
+        //            ViewBag.Message = result.Message;
+        //            ViewBag.Massage = "Se Agrego correctamente la materia. " + result.Message;
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Message = "Error" + result.Message;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Update
+        //        result = Negocio.Materia.ActualizarMateria(materia);
 
-            if (idMateria != null)
-            {
-                if (result.Correct)
-                {
-                    ViewBag.Massage = result.Message;
-                }
-                else
-                {
-                    ViewBag.Massage = "Error: " + result.Message;
-                }
-            }
-            else
-            {
-                return Redirect("/Materia/Index");
-            }
-            return View();
-        }
+        //        if (result.Correct)
+        //        {
+        //            ViewBag.Massage = "Se actualizo correctamente la materia. " + result.Message;
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Massage = "Error: " + result.Message;
+        //        }
+        //    }
+        //    //return PartialView("Modal");
+
+        //    return View(materia);
+        //}
+
+
+        //public ActionResult Delete(int idMateria)
+        //{
+        //    Modelo.Result result = Negocio.Materia.EliminarMateria(idMateria);
+
+        //    if (idMateria != null)
+        //    {
+        //        if (result.Correct)
+        //        {
+        //            ViewBag.Massage = result.Message;
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Massage = "Error: " + result.Message;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return Redirect("/Materia/Index");
+        //    }
+        //    return View();
+        //}
 
     }
 }
