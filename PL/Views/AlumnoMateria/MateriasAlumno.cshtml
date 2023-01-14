@@ -1,0 +1,41 @@
+﻿@model Modelo.AlumnoMateria
+@{
+    ViewBag.Title = "MateriasAlumno";
+}
+
+<div class="container">
+    <br />
+    <div class="row" align="center">
+        <h2>Administración De <span class="text-primary">Materias</span></h2>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col" align="center">
+            <a><input type="submit" value="Materias Inscritas" class="btn btn-secondary col-md-6" id="MI" onclick="ColorMI()" /></a>
+            <a><input type="submit" value="Materias Sin Inscribir" class="btn btn-secondary col-md-5" id="MD" onclick="ColorMD()" /></a>
+        </div>
+    </div>
+</div>
+
+<section class="resume-section" id="skills">
+</section>
+@section Scripts
+    {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+
+        function ColorMI() {
+            $('#MD').removeClass('btn-primary');
+            $('#MD').addClass('btn-secondary');
+            $('#MI').removeClass('btn-secondary');
+            $('#MI').addClass('btn-primary');
+        }
+        function ColorMD() {
+            $('#MI').removeClass('btn-primary');
+            $('#MI').addClass('btn-secondary');
+            $('#MD').removeClass('btn-secondary');
+            $('#MD').addClass('btn-primary');
+
+        }
+    </script>
+}

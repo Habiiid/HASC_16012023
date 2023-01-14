@@ -1,0 +1,236 @@
+﻿@model Modelo.Alumno
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <h2 class="text-center"> Listado de <span class="text-primary">Alumnos</span> </h2>
+</div>
+
+    <section class="resume-section" id="education">
+
+    <div class="container center-block">
+          
+        <div class="row">
+        <div class="col-auto ms-auto">
+                <button class="btn btn-primary" onclick="Modal(null)" style="color: ivory">
+                    <i class="fa-solid fa-user-plus fa-beat"></i>
+                    Agregar Nuevo
+                </button>
+        </div>
+        </div>
+
+        <div class="row">
+            <table class="table table-dark table-hover table-striped table-bordered table-responsive" id="tblAlumno">
+                <thead>
+                    <tr class="table-secondary">
+                        <th class="text-center"> Editar </th>
+
+                        <th style="display:none;"> IdAlumno </th>
+
+                        <th class="text-center"> Nombre Completo </th>
+
+                        <th class="text-center"> ICON </th>
+
+                        <th class="text-center"> Eliminar </th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Modelo.Alumno alumno in Model.Alumnos)
+                    {
+                        <tr>
+                            <td class="text-center"><a class="btn btn-warning glyphicon glyphicon-edit" onclick="Modal(@alumno.IdAlumno)"> <i class="bi bi-pencil-square" style="color: ivory"></i></a></td>
+
+                            <td style="display :none;"> @alumno.IdAlumno </td>
+
+                            <td class="text-center">
+                                @alumno.Nombre
+                                @alumno.ApellidoPaterno
+                                @alumno.ApellidoMaterno
+                            </td>
+
+                            <td class="text-center">
+                                @if (alumno.Imagen != null)
+                                {
+                                    <img id="Img" src="data:image/*;base64,@alumno.Imagen" style="width:75px ; height:75px" />
+                                }
+                                else
+                                {
+                                    <img id="Img" src="~/assets/img/NoAlumno.jpg" style="width:75px ; height:75px" />
+                                }
+                            </td>
+
+                            <td class="text-center"><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Alumno", new { IdAlumno = alumno.IdAlumno })" onclick="return confirm('Estas seguro que deseas eliminar este alumno?');"> <i class="bi bi-eraser-fill" style="color: mintcream"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+
+
+    </section>
+
+
+
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <!-- Portfolio Modal - Title-->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Formulario de <span class="text-primary">Alumnos</span></h2>
+
+                            <!-- Icon Divider-->
+                            <div class="divider-custom">
+                                <div class="divider-custom-icon"><i class="fa-solid fa-users-rectangle fa-2x" style="color: #efa72a"></i></div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 col-xl-7">
+                                    <!-- to get an API token!-->
+                                  @*  <form id="contactForm" data-sb-form-api-token="API_TOKEN">*@
+
+                                        @using (Html.BeginForm("Formulario", "Alumno", FormMethod.Post, new { enctype = "multipart/form-data", @id = "contactForm" }))
+                                        {
+
+                                        <div class="form-floating mb-3" style="display:none">
+                                            @*<input class="form-control" id="nombre" type="text" placeholder="Habid..." data-sb-validations="required" />*@
+
+                                            @Html.TextBoxFor(model => model.IdAlumno, new { @class = "form-control", @id="txtIdAlumno"})
+                                            <label for="name">IdAlumno</label>
+                                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                        </div>
+                                        <!-- Nombre input-->
+                                        <div class="form-floating mb-3">
+                                            @*<input class="form-control" id="nombre" type="text" placeholder="Habid..." data-sb-validations="required" />*@
+                            
+                                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id="txtNombre"})
+                                                <label for="name">Nombre</label>
+                                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                        </div>
+                                        <!-- Apellido Paterno input-->
+                                        <div class="form-floating mb-3">
+                                           @* <input class="form-control" id="AP" type="email" placeholder="Lopez" data-sb-validations="required,email" />*@
+                                         
+                                                @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id="txtAP", @type="text"})
+                                                <label for="email">Apellido Paterno </label>
+                                        </div>
+                                        <!-- Apellido Materno input-->
+                                        <div class="form-floating mb-3">
+                                            @*<input class="form-control" id="AM" type="tel" placeholder="Lopez" data-sb-validations="required" />*@
+                                            
+                                                @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id="txtAM"})
+                                                <label for="phone">Apellido Materno</label>
+                                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                                        </div>
+                                        <!-- Imagen input-->
+                                        <div class="form-floating mb-3">
+                                            @*<textarea class="form-control" id="Imagen" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>*@
+                                            @Html.LabelFor(model=> model.Imagen)
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1"><i class="bi bi-card-image"></i></span>
+                                                <input id="IFImagen" type='file' class="form-control" name="IFImagen" onchange="validateFile(this), readURL(this);  " />
+                                            </div>
+
+                                            @if (Model.Imagen != null)
+                                            {
+                                                <img id="Img" src="data:image/*;base64,@Model.Imagen" style="width:100px ; height:100px" />
+
+                                            }
+                                            else
+                                            {
+                                                <img id="Img" src="~/assets/img/NoAlumno.jpg" style="width:100px ; height:100px" />
+                                            }
+
+                                            @Html.ValidationMessageFor(model => model.Imagen)
+                                            @Html.HiddenFor(model => model.Imagen)
+                               
+                                            <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                        </div>
+                                        
+                                        <button class="btn btn-primary" id="submitButton" type="submit" data-bs-dismiss="modal">
+                                            <i class="fa-solid fa-check-to-slot"></i>
+   
+                                            Agregar
+                                        </button>
+                                        <button class="btn btn-secondary" data-bs-dismiss="modal">
+                                            <i class="fa-regular fa-rectangle-xmark"></i>
+                                           
+                                            Cerrar
+                                        </button>
+                                        }
+                                    @*</form>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+
+        function Modal(IdAlumno) {
+
+
+                if (IdAlumno != null) {
+                    
+                    $.ajax({
+                        url: 'http://localhost:5051/Alumno/Formulario',
+                        data: { IdAlumno: IdAlumno },
+                        success: function (result) {
+
+                        $('#txtIdAlumno').val(result.idAlumno);
+                        $('#txtNombre').val(result.nombre);
+                        $('#txtAP').val(result.apellidoPaterno);
+                        $('#txtAM').val(result.apellidoMaterno);
+
+                        $('#portfolioModal1').modal('show');
+
+                        }
+
+                    })
+
+
+                } else {
+                    $('#portfolioModal1').modal('show');
+                }
+            
+
+        }
+
+    </script>
+
+
+    <script>
+    function validateFile() {
+        var allowedExtension = ['jpeg', 'jpg', 'png'];
+        var fileExtension = document.getElementById('IFImagen').value.split('.').pop().toLowerCase();
+        var isValidFile = false;
+        for (var index in allowedExtension) {
+            if (fileExtension === allowedExtension[index]) {
+                isValidFile = true;
+                break;
+            }
+        }
+        if (!isValidFile) {
+            alert('Las extensiones permitidas son : *.' + allowedExtension.join(', *.'));
+            document.getElementById('IFImagen').value = ""
+        }
+        return isValidFile;
+    }
+
+    </script>
+
+        }

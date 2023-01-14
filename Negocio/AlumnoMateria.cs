@@ -1,0 +1,105 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
+namespace Negocio
+{
+    public class AlumnoMateria
+    {
+
+        public static Modelo.Result GetAllMateriasAsginadas(int IdAlumno)
+        {
+            Modelo.Result result = new Modelo.Result();
+            try
+            {
+                using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
+                {
+                    //var query = context.AlumnoMateriaGetByAlumno(IdAlumno).ToList();
+                    var alumnos = context.AlumnoMateria.FromSqlRaw($"AlumnoMateriaMostrarPorAlumno {IdAlumno}").ToList();
+
+                    result.Objects = new List<object>();
+
+                    if (alumnos != null)
+                    {
+                        foreach (var row in alumnos)
+                        {
+                            Modelo.AlumnoMateria alumnoMateria = new Modelo.AlumnoMateria();
+
+                            alumnoMateria.IdAlumnoMateria = row.IdAlumnoMateria;
+
+                            alumnoMateria.Alumno = new Modelo.Alumno();
+                            alumnoMateria.Alumno.IdAlumno = row.IdAlumno.Value;
+                            alumnoMateria.Alumno.Nombre = row.NombreAlumno;
+                            alumnoMateria.Alumno.ApellidoPaterno = row.ApellidoPaterno;
+                            alumnoMateria.Alumno.ApellidoMaterno = row.ApellidoMaterno;
+
+                            alumnoMateria.Materia = new Modelo.Materia();
+                            alumnoMateria.Materia.IdMateria = row.IdMateria.Value;
+                            alumnoMateria.Materia.Nombre = row.NombreMateria;
+                            alumnoMateria.Materia.Costo = decimal.Parse(row.Costo.ToString());
+
+                            result.Objects.Add(alumnoMateria);
+                        }
+                    }
+
+                }
+                result.Correct = true;
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Excepcion = ex;
+                result.ErrorMessage = "Ocurrio un error al mostrar las materias" + result.Excepcion;
+            }
+            return result;
+        }
+
+        public static Modelo.Result MateriasNoAsignadas(int IdAlumno)
+        {
+            Modelo.Result result = new Modelo.Result();
+            try
+            {
+                using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
+                {
+                    
+                    var alumnos = context.AlumnoMateria.FromSqlRaw($"MateriasNoAsignadasAlAlumno {IdAlumno}").ToList();
+                    result.Objects = new List<object>();
+
+                    if (alumnos != null)
+                    {
+
+                        foreach (var row in alumnos)
+                        {
+                            Modelo.AlumnoMateria alumnomateria = new Modelo.AlumnoMateria();
+
+                            alumnomateria.Materia = new Modelo.Materia();
+                            alumnomateria.Materia.IdMateria = row.IdMateria.Value;
+                            alumnomateria.Materia.Nombre = row.Nombre;
+                            alumnomateria.Materia.Costo = row.Costo;
+
+                            result.Objects.Add(alumnomateria);
+                            
+                            result.Correct = true;
+                        }
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "No se pudo realizar la consulta";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Excepcion = ex;
+            }
+            return result;
+        }
+    }
+}

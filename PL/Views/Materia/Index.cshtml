@@ -1,0 +1,147 @@
+﻿@model Modelo.Materia
+@{
+    ViewBag.Title = "Index";
+}
+<section class="resume-section" id="Materias">
+   <div class="resume-section-content">
+        <h2 class="text-center"> Listado de <span class="text-primary"> Materias </span> </h2>
+
+        <div class="row">
+            <div class="col-auto ms-auto">
+                <button class="btn btn-primary" onclick="Modal(null)" style="color: ivory">
+                    <i class="fa-solid fa-book fa-beat"></i>         
+                    Agregar Materia
+                </button>
+            </div>
+        </div>
+
+        @foreach (Modelo.Materia materia in Model.Materias)
+        {
+            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                <div class="flex-grow-1">
+                    <h3 class="mb-0"> @materia.Nombre</h3>
+                    <div class="subheading mb-3"> Semestral </div>
+                    <p> Conocimiento de la lengua española en forma oral y escrita para que el alumno maneje el vocabulario, la sintaxis (forma en que se conjugan las palabras) y la gramática (estudio de las reglas y principios que regulan el uso de las lenguas y la organización de las palabras dentro de una oración).
+                    </p>
+
+                    <td class="text-center"><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Formulario", "Materia", new { IdMateria = materia.IdMateria})"> Actualizar <i class="bi bi-pencil-square" style="color: ivory"></i></a></td>
+                    <td class="text-center"><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Materia", new { IdMateria = materia.IdMateria})" onclick="return confirm('Estas seguro que deseas eliminar este alumno?');"> Eliminar  <i class="bi bi-eraser-fill" style="color: mintcream"></i></a></td>
+
+                </div>
+                <div class="flex-shrink-0"><span class="text-primary"> Costo: $ @materia.Costo </span></div>
+            </div>
+        }
+       
+   </div>
+
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body text-center pb-5">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Formulario de <span class="text-primary">Materias</span></h2>
+
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-icon"><i class="fa-solid fa-users-rectangle fa-2x" style="color: #efa72a"></i></div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8 col-xl-7">
+                                        <!-- to get an API token!-->
+                                         @using (Html.BeginForm("Formulario", "Materia", FormMethod.Post, new { enctype = "multipart/form-data", @id = "contactForm" }))
+                                        {
+
+                                        <div class="form-floating mb-3" style="display:none">
+                                            @*<input class="form-control" id="nombre" type="text" placeholder="Habid..." data-sb-validations="required" />*@
+
+                                            @Html.TextBoxFor(model => model.IdMateria, new { @class = "form-control", @id="txtIdMateria"})
+                                            <label for="name">IdAlumno</label>
+                                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                        </div>
+                                        <!-- Nombre input-->
+                                        <div class="form-floating mb-3">
+                                            @*<input class="form-control" id="nombre" type="text" placeholder="Habid..." data-sb-validations="required" />*@
+                            
+                                                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id="txtNombre"})
+                                                <label for="name">Nombre</label>
+                                            <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                        </div>
+                                        <!-- Apellido Paterno input-->
+                                        <div class="form-floating mb-3">
+                                           @* <input class="form-control" id="AP" type="email" placeholder="Lopez" data-sb-validations="required,email" />*@
+                                         
+                                                @Html.TextBoxFor(model => model.Costo, new { @class = "form-control", @id="txtCosto", @type="text"})
+                                                <label for="email">Costo $ </label>
+                                        </div>
+                                        <!-- Apellido Materno input-->
+                                        <div class="form-floating mb-3">
+                                            @*<input class="form-control" id="AM" type="tel" placeholder="Lopez" data-sb-validations="required" />*@
+                                            
+                                                @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control", @id="txtDescripcion"})
+                                                <label for="phone">Descripcion</label>
+                                            <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                                        </div>
+
+                                            <button class="btn btn-primary" id="submitButton" type="submit" data-bs-dismiss="modal">
+                                                <i class="fa-solid fa-check-to-slot"></i>
+
+                                                Agregar
+                                            </button>
+                                            <button class="btn btn-secondary" data-bs-dismiss="modal">
+                                                <i class="fa-regular fa-rectangle-xmark"></i>
+
+                                                Cerrar
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+@section Scripts
+    {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    
+    <script type="text/javascript">
+
+        function Modal(IdMateria) {
+            if (IdMateria != null) {
+
+                $.ajax({
+                    url: 'http://localhost:5051/Materia/Formulario',
+                    data: { IdMateria: IdMateria },
+                    success: function (result) {
+
+                        $('#txtIdMateria').val(result.idMateria);
+                        $('#txtNombre').val(result.nombre);
+                        $('#txtCosto').val(result.costo);
+                        $('#txtDescripcion').val(result.descripcion);
+
+                        $('#portfolioModal1').modal('show');
+
+                    }
+
+                })
+
+
+            } else {
+                $('#portfolioModal1').modal('show');
+            }
+
+        }
+        
+    </script>
+}
