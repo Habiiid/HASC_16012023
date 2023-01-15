@@ -45,7 +45,7 @@ namespace Servicio.Controllers
 
         // Agregar
         [EnableCors("API")]
-        [HttpPost("Agregar")]
+        [HttpPost("AgregarMateria")]
         public IActionResult Post([FromBody] Modelo.Materia materia)
         {
             Modelo.Result result = Negocio.Materia.AgregarMateria(materia);
@@ -61,12 +61,11 @@ namespace Servicio.Controllers
 
         // UPDATE
         [EnableCors("API")]
-        [HttpPut("Actualizar/{idmateria}")]
-        public IActionResult Put(int idmateria, [FromBody] Modelo.Materia materia)
+        [HttpPost("ActualizarMateria")]
+        public IActionResult Put([FromBody] Modelo.Materia materia)
         {
-            materia.IdMateria = idmateria;
-
-            Modelo.Result result = Negocio.Materia.ActualizarMateria(materia);
+            
+            var result =  Negocio.Materia.ActualizarMateria(materia);
 
             if (result.Correct)
             {
@@ -80,7 +79,7 @@ namespace Servicio.Controllers
 
         // DELETE 
         [EnableCors("API")]
-        [HttpDelete("Eliminar/{idmateria}")]
+        [HttpDelete("Eliminar/{IdMateria}")]
         public IActionResult Delete(int idmateria)
         {
             if (idmateria > 0)

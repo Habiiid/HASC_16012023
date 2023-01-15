@@ -151,14 +151,14 @@ namespace Negocio
 
         }
 
-        public static Modelo.Result EliminarMateria(int IdMateria)
+        public static Modelo.Result EliminarMateria(int idMateria)
         {
             Modelo.Result result = new Modelo.Result();
             try
             {
                 using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
                 {
-                    int query = context.Database.ExecuteSqlRaw($"EliminarMateria {IdMateria}");
+                    int query = context.Database.ExecuteSqlRaw($"EliminarMateria {idMateria}");
 
                     if (query > 0)
                     {

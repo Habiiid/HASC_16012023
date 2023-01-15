@@ -8,7 +8,7 @@ function GetAll() {
         url: 'http://localhost:5156/api/Materia/MostrarTodasLasMaterias',
         success: function (result) { //200 OK 
             $('#myModal').modal('hide');
-            $('#ModalUpdate').modal('hide');
+            $('#portfolioModal1').modal('hide');
 
             $('#tblContent tbody').empty();
             $.each(result.objects, function (i, materia) {
@@ -22,7 +22,7 @@ function GetAll() {
                     + "<td class='text-center'>" + materia.costo + "</ td>"
                     + "<td class='text-center'>" + materia.descripcion + "</td>"        
                     + '<td class="text-center"> '
-                    + '<a href="#" class="btn btn-danger bi bi-trash" onclick="return Eliminar(' + materia.idMateria + ')">'
+                    + '<a href="#" class="btn btn-danger bi bi-trash" onclick="Eliminar(' + materia.idMateria + ')">'
                     + '</a> '
                     + '</td>'
 
@@ -37,51 +37,120 @@ function GetAll() {
     });
 };
 
-//function GetById(IdMateria) {
-//    $.ajax({
-//        type: 'GET',
-//        url: 'http://localhost:5051/api/Materia/MostrarUnaMateria/' + IdMateria,
-//        success: function (result) {
-//            $('#txtIdMateria').val(result.object.idMateria);
-//            $('#txtNombre').val(result.object.nombre);
-//            $('#txtCosto').val(result.object.costo);
-//            $('#txtDescripcion').val(result.object.descripcion);
-//            $('#ModalUpdate').modal('show');
-//        },
-//        error: function (result) {
-//            alert('Error en la consulta.' + result.responseJSON.ErrorMessage);
-//        }
-//    });
-//};
+function GetById(idMateria) {
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:5156/api/Materia/MostrarUnaMateria/' + idMateria,
+        success: function (result) {
+            $('#txtIdMateria').val(result.object.idMateria);
+            $('#txtNombre').val(result.object.nombre);
+            $('#txtCosto').val(result.object.costo);
+            $('#txtDescripcion').val(result.object.descripcion);
+            $('#portfolioModal1').modal('show');
+        },
+        error: function (result) {
+            alert('Error en la consulta.' + result.responseJSON.ErrorMessage);
+        }
+    });
+};
+
+function Actualizar() {
+    var materia = {
+        IdMateria: $('#txtIdMateria').val(),
+        Nombre: $('#txtNombre').val(),
+        Costo: $('#txtCosto').val(),
+        Descripcion: $('#txtDescripcion').val()
+    }
+    if (materia.IdMateria == '') {
+        Add(materia);
+
+    }
+    else {
+        Update(materia);
+    }
+}
 
 
-//function Actualizar() {
-//    $('#ModalUpdate').modal('hide');
-//    var materia = {
-//        IdMateria: $('#txtIdMateria').val(),
-//        Nombre: $('#txtNombre').val(),
-//        Costo: $('#txtCosto').val(),
-//        Descripcion: $('#txtDescripcion').val()       
-//    };
+function Add(materia) {
+    materia.IdMateria = 0;
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:5156/api/Materia/AgregarMateria',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        data: JSON.stringify(materia),
+        success: function (result) {
+            $('#myModal').modal();
+            $('#portfolioModal1').modal('hide');
+            GetAll();
+        },
+        error: function (result) {
+            alert('Error en la consulta.' + result.responseJSON.ErrorMessage);
+        }
+    });
+};
 
-//    if (materia.IdMateria == '') {
-//        materia.IdMateria = 0;
-//        Add(materia);
-//    }
-//    else {
-//        Update(materia);
-//    }
-//};
+function Update(materia) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:5156/api/Materia/ActualizarMateria',
+        datatype: 'json',
+        data: JSON.stringify(materia),
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+            $('#myModal').modal();
+            $('#portfolioModal1').modal('hide');
+            GetAll();
+        },
+        error: function (result) {
+            alert('Error en la consulta.' + result.responseJSON.ErrorMessage);
+        }
+    });
+};
+
+function Eliminar(idMateria) {
+    if (confirm("¿Estas seguro de eliminar la materia seleccionada?")) {
+        $.ajax({
+            type: 'DELETE',
+            url: 'http://localhost:5156/api/Materia/Eliminar/?IdMateria=' + idMateria,
+            success: function (result) {
+                $('#myModal').modal();
+                GetAll();
+            },
+            error: function (result) {
+                alert('Error en la consulta.' + result.responseJSON.ErrorMessage);
+            }
+        });
+    };
+};
+
+function IniciarMateria() {
+
+    var materia = {
+        IdMateria: $('#txtIdMateria').val(''),
+        Nombre: $('#txtNombre').val(''),
+        Costo: $('#txtCosto').val(''),
+        Descripcion: $('#txtDescripcion').val('')    
+    }
+}
+
+
+function Modal() {
+    var mostrar = $('#portfolioModal1').modal('show');
+    IniciarMateria();
+
+}
 
 function Modal() {
     $('#txtIdMateria').val('');
     $('#txtNombre').val('');
     $('#txtCosto').val('');
     $('#txtDescripcion').val('');
+    $('#portfolioModal1').modal('show');
 };
 
 function ModalCerrar() {
-    $('#ModalUpdate').modal('hide');
+    $('#portfolioModal1').modal('hide');
 }
 
 
