@@ -23,5 +23,5 @@ public partial class AlumnoMaterium
     public string ApellidoMaterno { get; set; }
     public decimal Costo { get; set; }
 
-    public string Nombre { get; set; }
+    //public string Nombre { get; set; }
 }

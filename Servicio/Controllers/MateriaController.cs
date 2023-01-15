@@ -77,14 +77,17 @@ namespace Servicio.Controllers
             }
         }
 
+    
         // DELETE 
-        [EnableCors("API")]
-        [HttpDelete("Eliminar/{IdMateria}")]
-        public IActionResult Delete(int idmateria)
+        [EnableCors("API")] 
+        [HttpDelete("Delete/{idMateria}")]
+        public IActionResult Delete(int idMateria)
         {
-            if (idmateria > 0)
+            if (idMateria > 0)
             {
-                Modelo.Result result = Negocio.Materia.EliminarMateria(idmateria);
+              
+                Modelo.Result result = Negocio.Materia.EliminarMateria(idMateria);
+
                 if (result.Correct)
                 {
                     return Ok(result);

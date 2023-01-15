@@ -27,17 +27,26 @@ namespace PL.Controllers
         }
 
         [HttpGet]
-        public ActionResult Form(int IdAlumno)
+        public ActionResult MateriasAlumno(int IdAlumno)
         {
-            Modelo.Result result = Negocio.AlumnoMateria.MateriasNoAsignadas(IdAlumno);
-            Modelo.AlumnoMateria alumnomateria = new Modelo.AlumnoMateria();
+            Modelo.AlumnoMateria alumnoMateria = new Modelo.AlumnoMateria(); //se instacio la clase AlumnoMateria
 
-            Modelo.Result resultalumno = Negocio.Alumno.MostrarUnAlumno(IdAlumno);
+            Modelo.Result result = Negocio.AlumnoMateria.GetAllMateriasAsginadas(IdAlumno); //mandamos a llamar el metodo que muestra las materias del alumno
 
-            alumnomateria.AlumnosMaterias = result.Objects;
-            alumnomateria.Alumno = ((Modelo.Alumno)resultalumno.Object);
+            alumnoMateria.Alumno = new Modelo.Alumno();  //instaciamos la clase del alumno
 
-            return View(alumnomateria);
+            Modelo.Result result1 = Negocio.Alumno.MostrarUnAlumno(IdAlumno);
+
+            if (result.Correct && result1.Correct) //validamos que ambas listas vengan con info
+            {
+                alumnoMateria.AlumnosMaterias = result.Objects;
+                alumnoMateria.Alumno = (Modelo.Alumno)result1.Object;
+            }
+            else
+            {
+                ViewBag.Message = "Ocurrio un error";
+            }
+            return View(alumnoMateria);
         }
 
     }

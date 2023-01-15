@@ -37,6 +37,24 @@ function GetAll() {
     });
 };
 
+
+function Modal() {
+    var mostrar = $('#portfolioModal1').modal('show');
+    IniciarMateria();
+
+}
+
+function IniciarMateria() {
+
+    var materia = {
+        IdMateria: $('#txtIdMateria').val(''),
+        Nombre: $('#txtNombre').val(''),
+        Costo: $('#txtCosto').val(''),
+        Descripcion: $('#txtDescripcion').val('')
+    }
+}
+
+
 function GetById(idMateria) {
     $.ajax({
         type: 'GET',
@@ -108,11 +126,12 @@ function Update(materia) {
     });
 };
 
+
 function Eliminar(idMateria) {
-    if (confirm("¿Estas seguro de eliminar la materia seleccionada?")) {
+    if (confirm("¿Estas seguro de eliminar el empleado seleccionado?")) {
         $.ajax({
             type: 'DELETE',
-            url: 'http://localhost:5156/api/Materia/Eliminar/?IdMateria=' + idMateria,
+            url: 'http://localhost:5156/api/Materia/Delete/' + idMateria,
             success: function (result) {
                 $('#myModal').modal();
                 GetAll();
@@ -124,30 +143,6 @@ function Eliminar(idMateria) {
     };
 };
 
-function IniciarMateria() {
-
-    var materia = {
-        IdMateria: $('#txtIdMateria').val(''),
-        Nombre: $('#txtNombre').val(''),
-        Costo: $('#txtCosto').val(''),
-        Descripcion: $('#txtDescripcion').val('')    
-    }
-}
-
-
-function Modal() {
-    var mostrar = $('#portfolioModal1').modal('show');
-    IniciarMateria();
-
-}
-
-function Modal() {
-    $('#txtIdMateria').val('');
-    $('#txtNombre').val('');
-    $('#txtCosto').val('');
-    $('#txtDescripcion').val('');
-    $('#portfolioModal1').modal('show');
-};
 
 function ModalCerrar() {
     $('#portfolioModal1').modal('hide');

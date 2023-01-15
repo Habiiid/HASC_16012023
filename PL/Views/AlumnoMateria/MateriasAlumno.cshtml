@@ -1,8 +1,8 @@
 ﻿@model Modelo.AlumnoMateria
 @{
     ViewBag.Title = "MateriasAlumno";
+    
 }
-
 <div class="container">
     <br />
     <div class="row" align="center">
@@ -15,8 +15,118 @@
             <a><input type="submit" value="Materias Sin Inscribir" class="btn btn-secondary col-md-5" id="MD" onclick="ColorMD()" /></a>
         </div>
     </div>
+    <div class="row">
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.Alumno.IdAlumno, new { @class = "hidden" })
+
+            @Html.TextBoxFor(model => model.Alumno.IdAlumno, new { @class = "hidden form-control" })
+
+        </div>
+
+        <div style="float:left">
+
+            @Html.LabelFor(model => model.Alumno.Nombre, "Nombre")
+
+            @Html.TextBoxFor(model => model.Alumno.Nombre, new { @class = "form-control", @readonly = true })
+
+        </div>
+
+        <div style="float:left">
+
+            @Html.LabelFor(model => model.Alumno.ApellidoPaterno, "Apellido Paterno")
+
+            @Html.TextBoxFor(model => model.Alumno.ApellidoPaterno, new { @class = "form-control", @readonly = true })
+
+        </div>
+
+        <div style="float:left">
+
+            @Html.LabelFor(model => model.Alumno.ApellidoMaterno, "Apellido Materno")
+
+            @Html.TextBoxFor(model => model.Alumno.ApellidoMaterno, new { @class = "form-control", @readonly = true })
+
+        </div>
+
+    </div>
+
+
+
 </div>
 
+<section class="resume-section" id="skills" style="display:none">
+    <div class="resume-section-content">
+        <h2 class="mb-5">Materias Inscritas</h2>
+
+        <div class="container center-block">
+           
+            <div class="row">
+                <table class="table table-dark table-hover table-striped table-bordered table-responsive" id="tblAlumno">
+                    <thead>
+                        <tr class="table-secondary">
+                           
+                            <th style="display:none;"> IdAlumnoMateria </th>              
+                            <th class="text-center"> Nombre </th>
+                            <th class="text-center"> Costo </th>
+ 
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (Modelo.AlumnoMateria alumnoMateria in Model.AlumnosMaterias)
+                        {
+                            <tr>
+                             
+                                <td> @alumnoMateria.IdAlumnoMateria </td>
+
+                                <td> @alumnoMateria.Materia.Nombre </td>
+
+                                <td> @alumnoMateria.Materia.Costo </td>
+
+                            
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+       
+  
+    </div>
+</section>
+
+
+<section class="resume-section" id="habilidades" style="display:none">
+    <div class="resume-section-content">
+        <h2 class="mb-5">Materias sin inscribir</h2>
+        <div class="subheading mb-3">Programming Languages & Tools</div>
+        <ul class="list-inline dev-icons">
+            <li class="list-inline-item"><i class="fab fa-html5"></i></li>
+
+        </ul>
+        <div class="subheading mb-3">Workflow</div>
+        <ul class="fa-ul mb-0">
+            <li>
+                <span class="fa-li"><i class="fas fa-check"></i></span>
+                Mobile-First, Responsive Design
+            </li>
+            <li>
+                <span class="fa-li"><i class="fas fa-check"></i></span>
+                Cross Browser Testing & Debugging
+            </li>
+            <li>
+                <span class="fa-li"><i class="fas fa-check"></i></span>
+                Cross Functional Teams
+            </li>
+            <li>
+                <span class="fa-li"><i class="fas fa-check"></i></span>
+                Agile Development & Scrum
+            </li>
+        </ul>
+    </div>
+</section>
 <section class="resume-section" id="skills">
 </section>
 @section Scripts
@@ -29,13 +139,16 @@
             $('#MD').addClass('btn-secondary');
             $('#MI').removeClass('btn-secondary');
             $('#MI').addClass('btn-primary');
+            $('#habilidades').hide();
+            $('#skills').show();
         }
         function ColorMD() {
             $('#MI').removeClass('btn-primary');
             $('#MI').addClass('btn-secondary');
             $('#MD').removeClass('btn-secondary');
             $('#MD').addClass('btn-primary');
-
+            $('#skills').hide();
+            $('#habilidades').show();
         }
     </script>
 }

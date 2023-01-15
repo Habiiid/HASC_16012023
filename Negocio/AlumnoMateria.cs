@@ -78,7 +78,7 @@ namespace Negocio
 
                             alumnomateria.Materia = new Modelo.Materia();
                             alumnomateria.Materia.IdMateria = row.IdMateria.Value;
-                            alumnomateria.Materia.Nombre = row.Nombre;
+                            alumnomateria.Materia.Nombre = row.NombreMateria;
                             alumnomateria.Materia.Costo = row.Costo;
 
                             result.Objects.Add(alumnomateria);
