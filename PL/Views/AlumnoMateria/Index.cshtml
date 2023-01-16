@@ -9,6 +9,7 @@
 
         <div class="row">
             <h2 class="text-center"> Alumnos <span class="text-primary"> Registrados </span> </h2>
+            <hr />
         </div>
 
 
@@ -22,15 +23,17 @@
                         <td class="text-center">
                             @if (alumno.Imagen != null)
                             {
-                                <img id="Img" src="data:image/*;base64,@alumno.Imagen" style="width:70px ; height:70px" />
+                             <img id="ImagenPreview" src="data:image/*;base64,@alumno.Imagen" style="width:70px ; height:70px" />
                             }
                             else
                             {
-                                <img id="Img" src="~/assets/img/NoAlumno.jpg" style="width:70px ; height:70px" />
+                                <img id="ImagenPreview" src="~/assets/img/NoAlumno.jpg" style="width:70px ; height:70px" />
                             }
                         </td>
-                        <div class="hidden"> @alumno.IdAlumno </div>
-                    </div>                  
+                        
+                    </div>
+
+               @* <div class="display:none;"> @alumno.IdAlumno </div>*@
 
                 <div class="col-md-4">
                     <h3 class="mb-0"> @alumno.Nombre</h3>

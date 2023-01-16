@@ -10,25 +10,42 @@ function GetAll() {
             $('#myModal').modal('hide');
             $('#portfolioModal1').modal('hide');
 
-            $('#tblContent tbody').empty();
+            $('#Seccion1').empty();
             $.each(result.objects, function (i, materia) {
                 var filas =
-                    '<tr>'
-                    + '<td class="text-center"> '
+                    + '<div class="d-flex flex-column flex-md-row justify-content-between mb-5">'
+                    + ' <div class="flex-grow-1">'
+                    + "<h3 class='mb-0'>" + materia.nombre + "</h3>"
+                    + ' <div class="subheading mb-3"> Semestral </div>'
+                    + "<p>" + materia.descripcion +"</p>"
+                    + '</div>'   
+                    + "<div class='flex-shrink-0'><span class='text-primary'> Costo: $ " + materia.costo + "</span></div>"
+
                     + '<a href="#" class="btn btn-warning bi bi-pencil-square" onclick="GetById(' + materia.idMateria + ')">'
-                    + '</a> '
-                    + '</td>'
-                    + "<td class='text-center'>" + materia.nombre + "</td>"
-                    + "<td class='text-center'>" + materia.costo + "</ td>"
-                    + "<td class='text-center'>" + materia.descripcion + "</td>"        
-                    + '<td class="text-center"> '
                     + '<a href="#" class="btn btn-danger bi bi-trash" onclick="Eliminar(' + materia.idMateria + ')">'
-                    + '</a> '
-                    + '</td>'
+
+                    + ' </div>' 
+
+                $('#Seccion1').show();
+
+                   
+               
+                //    '<tr>'
+                //    + '<td class="text-center"> '
+                //    + '<a href="#" class="btn btn-warning bi bi-pencil-square" onclick="GetById(' + materia.idMateria + ')">'
+                //    + '</a> '
+                //    + '</td>'
+                //    + "<td class='text-center'>" + materia.nombre + "</td>"
+                //    + "<td class='text-center'>" + materia.costo + "</ td>"
+                //    + "<td class='text-center'>" + materia.descripcion + "</td>"        
+                //    + '<td class="text-center"> '
+                //    + '<a href="#" class="btn btn-danger bi bi-trash" onclick="Eliminar(' + materia.idMateria + ')">'
+                //    + '</a> '
+                //    + '</td>'
 
 
-                    + "</tr>";
-                $("#tblContent tbody").append(filas);
+                //    + "</tr>";
+                $("#Seccion1").append(filas);
             });
         },
         error: function (result) {
@@ -52,8 +69,9 @@ function IniciarMateria() {
         Costo: $('#txtCosto').val(''),
         Descripcion: $('#txtDescripcion').val('')
         
-        $('#portfolioModal1').modal('show');
+     
     }
+    $('#portfolioModal1').modal('show');
 }
 
 
@@ -102,7 +120,9 @@ function Add(materia) {
         success: function (result) {
             $('#myModal').modal();
             $('#portfolioModal1').modal('hide');
-            GetAll();
+            $('#materia').modal('show');
+            
+            /*GetAll();*/
         },
         error: function (result) {
             alert('Error en la consulta.' + result.responseJSON.ErrorMessage);

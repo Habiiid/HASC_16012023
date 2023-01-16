@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\assets\img\NewFolder\" />
-    <Folder Include="wwwroot\jss\" />
   </ItemGroup>
 
   <ItemGroup>

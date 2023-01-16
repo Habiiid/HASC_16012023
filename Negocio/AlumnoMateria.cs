@@ -14,6 +14,7 @@ namespace Negocio
         public static Modelo.Result GetAllMateriasAsginadas(int IdAlumno)
         {
             Modelo.Result result = new Modelo.Result();
+            
             try
             {
                 using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())

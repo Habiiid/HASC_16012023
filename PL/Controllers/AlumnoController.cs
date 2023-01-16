@@ -74,9 +74,11 @@ namespace PL.Controllers
             Modelo.Result result = new Modelo.Result();
 
             IFormFile image = Request.Form.Files["IFImagen"];
-            if (image != null)
+
+           if (image != null)
             {
                 byte[] ImagenBytes = ConvertToBytes(image);
+
                 alumno.Imagen = Convert.ToBase64String(ImagenBytes);
             }
             if (alumno.IdAlumno == 0)
@@ -107,9 +109,9 @@ namespace PL.Controllers
                         ViewBag.Massage = "Error: " + result.Message;
                     }
                 }
-                //return PartialView("Modal");
+            return PartialView("Modal");
+
             
-            return View(alumno);
         }
 
 
@@ -132,7 +134,7 @@ namespace PL.Controllers
             {
                 return Redirect("/Alumno/Index");
             }
-            return View();
+            return PartialView("Modal");
         }
 
 

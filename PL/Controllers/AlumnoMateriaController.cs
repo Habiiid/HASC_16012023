@@ -30,6 +30,7 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult MateriasAlumno(int IdAlumno)
         {
+            decimal total = 0;
             //Asignadas
             Modelo.AlumnoMateria alumnoMateria = new Modelo.AlumnoMateria(); 
 
@@ -56,8 +57,20 @@ namespace PL.Controllers
             }
             else
             {
-                ViewBag.Message = "Ocurrio un error";
+                ViewBag.Massage = "Ocurrio un error";
             }
+
+           
+            if (alumnoMateria.AlumnosMaterias.Count > 0)
+            {
+                foreach (Modelo.AlumnoMateria materiacosto in alumnoMateria.AlumnosMaterias)
+                {
+                    //total = total + materiacosto.Materia.Costo;
+                }
+            }
+            ViewBag.Correct = true;
+            ViewBag.Total = total;
+
             return View(alumnoMateria);
         }
 
@@ -83,13 +96,13 @@ namespace PL.Controllers
                 }
 
                 result1.Correct = true;
-
+                ViewBag.Massage = "Se actualizo correctamente el alumno. " + result1.Message;
             }
             else
             {
                 result1.Correct = false;
             }
-            return View("Modal");
+            return PartialView("Modal");
         }
 
         public ActionResult Eliminar(int IdAlumnoMateria, int IdAlumno)
@@ -103,11 +116,11 @@ namespace PL.Controllers
 
             if (result.Correct)
             {
-                ViewBag.message = "Se ha eliminado exitosamente el registro";
+                ViewBag.Massage = "Se ha eliminado exitosamente el registro";
             }
             else
             {
-                ViewBag.message = "ocurrió un error al eliminar el registro " + result.ErrorMessage;
+                ViewBag.Massage = "ocurrió un error al eliminar el registro " + result.ErrorMessage;
 
             }
             return PartialView("Modal");

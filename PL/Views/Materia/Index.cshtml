@@ -11,8 +11,17 @@
 <div class="resume-section-content">
 
         <h2 class="text-center"> Listado de <span class="text-primary"> Materias </span> </h2>
-
-    <div class="container">
+        <hr />
+        
+            <div class="row">
+                <div class="col-auto ms-auto">
+                    <button class="btn btn-primary" onclick="Modal(null)" style="color: ivory">
+                        <i class="fa-solid fa-book fa-beat"></i>
+                        Agregar Materia
+                    </button>
+                </div>
+            </div>
+    @*<div class="container">
         <br />
         <hr />
         <div class="row">
@@ -20,14 +29,14 @@
                 <a><input type="submit" value="Detalle de Materias " class="btn btn-secondary col-md-6" id="MI" onclick="ColorMI()" /></a>
             </div>
         </div>
-    </div>
+    </div>*@
 
-    <section class="resume-section" id="MDescripcion" style="display:none">
-        <div class="resume-section-content">
+    <section class="resume-section" id="MDescripcion" >
+        <div class="resume-section-content" id="Seccion1" style="display:none">
             <h2 class="mb-5">Descripcion de materias </h2>
 
 
-            @foreach (Modelo.Materia materia in Model.Materias)
+            @*@foreach (Modelo.Materia materia in Model.Materias)
             {
 
                 <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
@@ -40,20 +49,12 @@
                     <div class="flex-shrink-0"><span class="text-primary"> Costo: $ @materia.Costo </span></div>
                 </div>
 
-            }
+            }*@
         </div>
     </section>
 
-        <div class="row">
-            <div class="col-auto ms-auto">
-                <button class="btn btn-primary" onclick="Modal(null)" style="color: ivory">
-                    <i class="fa-solid fa-book fa-beat"></i>
-                    Agregar Materia
-                </button>
-            </div>
-        </div>
 
-        <table id="tblContent" class="table table-hover" border="1">
+       @* <table id="tblContent" class="table table-hover" border="1">
             <thead>
                  <tr>
                         <th class="text-center" scope="col">Editar</th>
@@ -65,7 +66,7 @@
 
             </thead>
             <tbody> </tbody>
-        </table>
+        </table>*@
 
 </div>
 
