@@ -60,7 +60,57 @@ namespace PL.Controllers
             return View(alumnoMateria);
         }
 
+        [HttpPost]
+        public ActionResult Agregar(Modelo.AlumnoMateria alumnomateria1)
+        {
+            Modelo.Result result = new Modelo.Result();
 
-       
+            if (alumnomateria1.Materiasasignadas != null)
+            {
+                foreach (string IdMateria in alumnomateria1.AlumnosMaterias)
+                {
+                    Modelo.AlumnoMateria alumnoMateriaAgregar = new Modelo.AlumnoMateria();
+
+                    alumnoMateriaAgregar.Alumno = new Modelo.Alumno();
+                    alumnoMateriaAgregar.Alumno.IdAlumno = alumnomateria1.Alumno.IdAlumno;
+
+                    alumnoMateriaAgregar.Materia = new Modelo.Materia();
+                    alumnoMateriaAgregar.Materia.IdMateria = int.Parse(IdMateria);
+
+                    result = Negocio.AlumnoMateria.AgregarAlumnoMateria(alumnoMateriaAgregar);
+                }
+
+
+                result.Correct = true;
+
+            }
+            else
+            {
+                result.Correct = false;
+            }
+            return PartialView("Modal", alumnomateria1.Alumno);
+        }
+
+        public ActionResult Eliminar(int IdAlumnoMateria, int IdAlumno)
+        {
+            Modelo.AlumnoMateria alumnomateria = new Modelo.AlumnoMateria();
+            alumnomateria.IdAlumnoMateria = IdAlumnoMateria;
+            Modelo.Result result = Negocio.AlumnoMateria.EliminarAlumnoMateria(alumnomateria);
+
+            ViewBag.MateriasAsignadas = true;
+            ViewBag.IdAlumno = IdAlumno;
+
+            if (result.Correct)
+            {
+                ViewBag.message = "Se ha eliminado exitosamente el registro";
+            }
+            else
+            {
+                ViewBag.message = "ocurrió un error al eliminar el registro " + result.ErrorMessage;
+
+            }
+            return PartialView("Modal");
+        }
+
     }
 }

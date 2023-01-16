@@ -104,67 +104,67 @@ namespace Negocio
             return result;
         }
 
-        //public static Modelo.Result AlumnoMateriaAdd(Modelo.AlumnoMateria alumnoMateria)
-        //{
-        //    Modelo.Result result = new Modelo.Result();
+        public static Modelo.Result AgregarAlumnoMateria(Modelo.AlumnoMateria alumnoMateria)
+        {
+            Modelo.Result result = new Modelo.Result();
 
-        //    try
-        //    {
-        //        using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
-        //        {
-        //           // var query = context.AlumnoMateriaAdd(alumnoMateria.Alumno.IdAlumno, alumnoMateria.Materia.IdMateria);
-        //            var alumnos = context.AlumnoMateria.FromSqlRaw($"AgregarAlumnoMateria {IdAlumno}").ToList();
-        //            {
-        //                if (alumnos != null)
-        //                {
-        //                    result.Correct = true;
-        //                }
-        //                else
-        //                {
-        //                    result.Correct = false;
-        //                    result.ErrorMessage = "No se ha podido insertar la(s) nueva(s) materia(s)";
-        //                }
-        //                result.Correct = true;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.Correct = false;
-        //        result.Excepcion = ex;
-        //        result.ErrorMessage = ex.Message;
-        //    }
-        //    return result;
-        //}
+            try
+            {
+                using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
+                {
+                    // var query = context.AlumnoMateriaAdd(alumnoMateria.Alumno.IdAlumno, alumnoMateria.Materia.IdMateria);
+                    var alumnos = context.Database.ExecuteSqlRaw($"AgregarAlumnoMateria {alumnoMateria.IdAlumno} , {alumnoMateria.IdMateria}");
+                    {
+                        if (alumnos != null)
+                        {
+                            result.Correct = true;
+                        }
+                        else
+                        {
+                            result.Correct = false;
+                            result.ErrorMessage = "No se ha podido insertar la(s) nueva(s) materia(s)";
+                        }
+                        result.Correct = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Excepcion = ex;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
 
-        //public static Modelo.Result DeleteMateria(Modelo.AlumnoMateria alumnomateria)
-        //{
-        //    Modelo.Result result = new Modelo.Result();
-        //    try
-        //    {
-        //        using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
-        //        {
-        //            // var query = context.AlumnoMateriaDelete(alumnomateria.IdAlumnoMateria);
-        //            var alumnos = context.AlumnoMateria.FromSqlRaw($"EliminarAlumnoMateria {IdAlumnoMateria}").ToList();
-        //            result.Object = alumnomateria;
+        public static Modelo.Result EliminarAlumnoMateria(Modelo.AlumnoMateria alumnoMateria)
+        {
+            Modelo.Result result = new Modelo.Result();
+            try
+            {
+                using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
+                {
+                    // var query = context.AlumnoMateriaDelete(alumnomateria.IdAlumnoMateria);
+                    var alumnos = context.Database.ExecuteSqlRaw($"EliminarAlumnoMateria {alumnoMateria.IdAlumnoMateria}");
+                    result.Object = alumnoMateria;
 
-        //            if (alumnos != null)
-        //            {
-        //                result.Correct = true;
-        //            }
-        //            else
-        //            {
-        //                result.Correct = false;
-        //                result.ErrorMessage = "No se encntraron registros";
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.Correct = false;
-        //        result.ErrorMessage = ex.Message;
-        //    }
-        //    return result;
-        //}
+                    if (alumnos != null)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Ocurrio un error al eliminar";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
     }
 }

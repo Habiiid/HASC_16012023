@@ -78,13 +78,16 @@
                         {
                             <tr>
                              
-                                <td> @alumnoMateria.IdAlumnoMateria </td>
+                                <td style="display:none"> @alumnoMateria.IdAlumnoMateria </td>
+                                
+                                <td class="text-center">
+                                    <a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Eliminar", "AlumnoMateria", new { IdAlumnoMateria = alumnoMateria.IdAlumnoMateria, IdAlumno = alumnoMateria.Alumno.IdAlumno })" onclick="return confirm('Estas seguro que deseas eliminar la materia de este alumno?');"></a>
+                                </td>
 
                                 <td> @alumnoMateria.Materia.Nombre </td>
 
                                 <td> @alumnoMateria.Materia.Costo </td>
 
-                            
                             </tr>
                         }
                     </tbody>
@@ -101,7 +104,7 @@
         <h2 class="mb-5"> Materias sin inscribir</h2>
         
         <div class="container center-block">
-            @using (Html.BeginForm("MateriSinAlumno", "AlumnoMateria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("Agregar", "AlumnoMateria", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
         <div class="row">
         <div class="col" style="display:none">
@@ -159,15 +162,24 @@
 
                                         <td> @alumnoMateria1.IdAlumnoMateria </td>
 
+                                        <td class="text-center">
+                                            <input type="checkbox" value="@alumnoMateria1.Materia.IdMateria" name="Materiasasignadas">
+                                        </td>
+
                                         <td> @alumnoMateria1.Materia.Nombre </td>
 
-                                        <td> @alumnoMateria1.Materia.Costo </td>
-
+                                        <td> @alumnoMateria1.Materia.Costo </td>      
 
                                     </tr>
                                 }
                             </tbody>
                         </table>
+                           <div class="form-group col-md-12">
+                                <div class="text-right">
+                                    <input class="btn btn-success" type="submit" value="Actualizar" />
+                                    <a class="btn btn-danger" href="@Url.Action("Index", "AlumnoMateria", new { IdAlumno = Model.Alumno.IdAlumno })"> Regresar </a>
+                                </div>
+                            </div>
                     </div>
                 </div>
 
