@@ -15,7 +15,10 @@ namespace Modelo
 
         public List<Object> AlumnosMaterias { get; set; }
 
+        public List<Object> Materiasasignadas { get; set; }
+
         public Modelo.Alumno Alumno { get; set; }
         public Modelo.Materia Materia { get; set; }
+
     }
 }

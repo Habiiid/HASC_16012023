@@ -18,7 +18,7 @@ namespace Negocio
             {
                 using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
                 {
-                    //var query = context.AlumnoMateriaGetByAlumno(IdAlumno).ToList();
+               
                     var alumnos = context.AlumnoMateria.FromSqlRaw($"AlumnoMateriaMostrarPorAlumno {IdAlumno}").ToList();
 
                     result.Objects = new List<object>();
@@ -29,7 +29,7 @@ namespace Negocio
                         {
                             Modelo.AlumnoMateria alumnoMateria = new Modelo.AlumnoMateria();
 
-                            alumnoMateria.IdAlumnoMateria = row.IdAlumnoMateria;
+                            alumnoMateria.IdAlumnoMateria = row.IdAlumnoMateria.Value;
 
                             alumnoMateria.Alumno = new Modelo.Alumno();
                             alumnoMateria.Alumno.IdAlumno = row.IdAlumno.Value;
@@ -65,8 +65,9 @@ namespace Negocio
             {
                 using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
                 {
-                    
-                    var alumnos = context.AlumnoMateria.FromSqlRaw($"MateriasNoAsignadasAlAlumno {IdAlumno}").ToList();
+                
+                    var alumnos = context.Materia.FromSqlRaw($"MateriasNoAsignadasAlAlumno {IdAlumno}").ToList();
+
                     result.Objects = new List<object>();
 
                     if (alumnos != null)
@@ -77,13 +78,12 @@ namespace Negocio
                             Modelo.AlumnoMateria alumnomateria = new Modelo.AlumnoMateria();
 
                             alumnomateria.Materia = new Modelo.Materia();
-                            alumnomateria.Materia.IdMateria = row.IdMateria.Value;
-                            alumnomateria.Materia.Nombre = row.NombreMateria;
+                            alumnomateria.Materia.IdMateria = row.IdMateria;
+                            alumnomateria.Materia.Nombre = row.MateriaNombre;
                             alumnomateria.Materia.Costo = row.Costo;
 
                             result.Objects.Add(alumnomateria);
-                            
-                            result.Correct = true;
+                       
                         }
                     }
                     else
@@ -91,7 +91,9 @@ namespace Negocio
                         result.Correct = false;
                         result.ErrorMessage = "No se pudo realizar la consulta";
                     }
+                    
                 }
+                result.Correct = true;
             }
             catch (Exception ex)
             {
@@ -101,5 +103,68 @@ namespace Negocio
             }
             return result;
         }
+
+        //public static Modelo.Result AlumnoMateriaAdd(Modelo.AlumnoMateria alumnoMateria)
+        //{
+        //    Modelo.Result result = new Modelo.Result();
+
+        //    try
+        //    {
+        //        using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
+        //        {
+        //           // var query = context.AlumnoMateriaAdd(alumnoMateria.Alumno.IdAlumno, alumnoMateria.Materia.IdMateria);
+        //            var alumnos = context.AlumnoMateria.FromSqlRaw($"AgregarAlumnoMateria {IdAlumno}").ToList();
+        //            {
+        //                if (alumnos != null)
+        //                {
+        //                    result.Correct = true;
+        //                }
+        //                else
+        //                {
+        //                    result.Correct = false;
+        //                    result.ErrorMessage = "No se ha podido insertar la(s) nueva(s) materia(s)";
+        //                }
+        //                result.Correct = true;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Correct = false;
+        //        result.Excepcion = ex;
+        //        result.ErrorMessage = ex.Message;
+        //    }
+        //    return result;
+        //}
+
+        //public static Modelo.Result DeleteMateria(Modelo.AlumnoMateria alumnomateria)
+        //{
+        //    Modelo.Result result = new Modelo.Result();
+        //    try
+        //    {
+        //        using (Datos.ControlEscolarContext context = new Datos.ControlEscolarContext())
+        //        {
+        //            // var query = context.AlumnoMateriaDelete(alumnomateria.IdAlumnoMateria);
+        //            var alumnos = context.AlumnoMateria.FromSqlRaw($"EliminarAlumnoMateria {IdAlumnoMateria}").ToList();
+        //            result.Object = alumnomateria;
+
+        //            if (alumnos != null)
+        //            {
+        //                result.Correct = true;
+        //            }
+        //            else
+        //            {
+        //                result.Correct = false;
+        //                result.ErrorMessage = "No se encntraron registros";
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Correct = false;
+        //        result.ErrorMessage = ex.Message;
+        //    }
+        //    return result;
+        //}
     }
 }

@@ -12,11 +12,18 @@
     <div class="row">
         <div class="col" align="center">
             <a><input type="submit" value="Materias Inscritas" class="btn btn-secondary col-md-6" id="MI" onclick="ColorMI()" /></a>
-            <a><input type="submit" value="Materias Sin Inscribir" class="btn btn-secondary col-md-5" id="MD" onclick="ColorMD()" /></a>
+            <a><input type="submit" value="Materias Sin Inscribir" class="btn btn-secondary col-md-5" id="MD" onclick="ColorMD()">/></a>
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group">
+    </div>  
+
+</div>
+
+<section class="resume-section" id="skills" style="display:none">
+    <div class="resume-section-content">
+        <h2 class="mb-5">Materias Inscritas</h2>
+
+        <div class="row">
+            <div class="col" style="display:none">
 
             @Html.LabelFor(model => model.Alumno.IdAlumno, new { @class = "hidden" })
 
@@ -24,7 +31,7 @@
 
         </div>
 
-        <div style="float:left">
+        <div class="col">
 
             @Html.LabelFor(model => model.Alumno.Nombre, "Nombre")
 
@@ -32,7 +39,7 @@
 
         </div>
 
-        <div style="float:left">
+            <div class="col">
 
             @Html.LabelFor(model => model.Alumno.ApellidoPaterno, "Apellido Paterno")
 
@@ -40,7 +47,7 @@
 
         </div>
 
-        <div style="float:left">
+           <div class="col">
 
             @Html.LabelFor(model => model.Alumno.ApellidoMaterno, "Apellido Materno")
 
@@ -48,15 +55,9 @@
 
         </div>
 
-    </div>
+        </div>
 
 
-
-</div>
-
-<section class="resume-section" id="skills" style="display:none">
-    <div class="resume-section-content">
-        <h2 class="mb-5">Materias Inscritas</h2>
 
         <div class="container center-block">
            
@@ -91,44 +92,95 @@
             </div>
         </div>
 
-
-       
-  
     </div>
 </section>
 
 
 <section class="resume-section" id="habilidades" style="display:none">
     <div class="resume-section-content">
-        <h2 class="mb-5">Materias sin inscribir</h2>
-        <div class="subheading mb-3">Programming Languages & Tools</div>
-        <ul class="list-inline dev-icons">
-            <li class="list-inline-item"><i class="fab fa-html5"></i></li>
+        <h2 class="mb-5"> Materias sin inscribir</h2>
+        
+        <div class="container center-block">
+            @using (Html.BeginForm("MateriSinAlumno", "AlumnoMateria", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+        <div class="row">
+        <div class="col" style="display:none">
 
-        </ul>
-        <div class="subheading mb-3">Workflow</div>
-        <ul class="fa-ul mb-0">
-            <li>
-                <span class="fa-li"><i class="fas fa-check"></i></span>
-                Mobile-First, Responsive Design
-            </li>
-            <li>
-                <span class="fa-li"><i class="fas fa-check"></i></span>
-                Cross Browser Testing & Debugging
-            </li>
-            <li>
-                <span class="fa-li"><i class="fas fa-check"></i></span>
-                Cross Functional Teams
-            </li>
-            <li>
-                <span class="fa-li"><i class="fas fa-check"></i></span>
-                Agile Development & Scrum
-            </li>
-        </ul>
+            @Html.LabelFor(model => model.Alumno.IdAlumno, new { @class = "hidden" })
+
+            @Html.TextBoxFor(model => model.Alumno.IdAlumno, new { @class = "hidden form-control" })
+
+        </div>
+
+        <div class="col">
+
+            @Html.LabelFor(model => model.Alumno.Nombre, "Nombre")
+
+            @Html.TextBoxFor(model => model.Alumno.Nombre, new { @class = "form-control", @readonly = true })
+
+        </div>
+
+        <div class="col">
+
+            @Html.LabelFor(model => model.Alumno.ApellidoPaterno, "Apellido Paterno")
+
+            @Html.TextBoxFor(model => model.Alumno.ApellidoPaterno, new { @class = "form-control", @readonly = true })
+
+        </div>
+
+        <div class="col">
+
+            @Html.LabelFor(model => model.Alumno.ApellidoMaterno, "Apellido Materno")
+
+            @Html.TextBoxFor(model => model.Alumno.ApellidoMaterno, new { @class = "form-control", @readonly = true })
+
+        </div>
+
+        </div>
+
+                <div class="container center-block">
+
+                    <div class="row">
+                        <table class="table table-dark table-hover table-striped table-bordered table-responsive" id="tblAlumno">
+                            <thead>
+                                <tr class="table-secondary">
+
+                                    <th style="display:none;"> IdAlumnoMateria </th>
+                                    <th class="text-center"> Nombre </th>
+                                    <th class="text-center"> Costo </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (Modelo.AlumnoMateria alumnoMateria1 in Model.Materiasasignadas)
+                                {
+                                    <tr>
+
+                                        <td> @alumnoMateria1.IdAlumnoMateria </td>
+
+                                        <td> @alumnoMateria1.Materia.Nombre </td>
+
+                                        <td> @alumnoMateria1.Materia.Costo </td>
+
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            }
+        </div>
+
     </div>
 </section>
+
 <section class="resume-section" id="skills">
 </section>
+
+
 @section Scripts
     {
     <script src="~/lib/jquery/dist/jquery.js"></script>

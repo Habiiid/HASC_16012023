@@ -14,4 +14,8 @@ public partial class Materium
     public string? Descripcion { get; set; }
 
     public virtual ICollection<AlumnoMaterium> AlumnoMateria { get; } = new List<AlumnoMaterium>();
+
+    //agregada
+
+    public string MateriaNombre { get; set; }
 }

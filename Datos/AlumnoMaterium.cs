@@ -5,7 +5,7 @@ namespace Datos;
 
 public partial class AlumnoMaterium
 {
-    public int IdAlumnoMateria { get; set; }
+    public int? IdAlumnoMateria { get; set; }
 
     public int? IdAlumno { get; set; }
 
@@ -22,6 +22,9 @@ public partial class AlumnoMaterium
     public string ApellidoPaterno { get; set; }
     public string ApellidoMaterno { get; set; }
     public decimal Costo { get; set; }
+
+    public string MateriaNombre { get; set; }
+
 
     //public string Nombre { get; set; }
 }

@@ -29,18 +29,29 @@ namespace PL.Controllers
         [HttpGet]
         public ActionResult MateriasAlumno(int IdAlumno)
         {
-            Modelo.AlumnoMateria alumnoMateria = new Modelo.AlumnoMateria(); //se instacio la clase AlumnoMateria
+            //Asignadas
+            Modelo.AlumnoMateria alumnoMateria = new Modelo.AlumnoMateria(); 
 
-            Modelo.Result result = Negocio.AlumnoMateria.GetAllMateriasAsginadas(IdAlumno); //mandamos a llamar el metodo que muestra las materias del alumno
+            Modelo.Result asignadas = Negocio.AlumnoMateria.GetAllMateriasAsginadas(IdAlumno);
 
-            alumnoMateria.Alumno = new Modelo.Alumno();  //instaciamos la clase del alumno
+            //sinasignar
+            Modelo.AlumnoMateria alumnoMateria1 = new Modelo.AlumnoMateria();
 
-            Modelo.Result result1 = Negocio.Alumno.MostrarUnAlumno(IdAlumno);
+            Modelo.Result noasignadas = Negocio.AlumnoMateria.MateriasNoAsignadas(IdAlumno);
 
-            if (result.Correct && result1.Correct) //validamos que ambas listas vengan con info
+            //alumno
+            alumnoMateria.Alumno = new Modelo.Alumno();  
+
+            Modelo.Result alumno = Negocio.Alumno.MostrarUnAlumno(IdAlumno);
+
+            if (asignadas.Correct && noasignadas.Correct && alumno.Correct) 
             {
-                alumnoMateria.AlumnosMaterias = result.Objects;
-                alumnoMateria.Alumno = (Modelo.Alumno)result1.Object;
+                alumnoMateria.AlumnosMaterias = asignadas.Objects; 
+
+                alumnoMateria.Materiasasignadas = noasignadas.Objects;
+               
+                alumnoMateria.Alumno = (Modelo.Alumno)alumno.Object;      
+                
             }
             else
             {
@@ -49,5 +60,7 @@ namespace PL.Controllers
             return View(alumnoMateria);
         }
 
+
+       
     }
 }
