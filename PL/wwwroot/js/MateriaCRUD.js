@@ -51,6 +51,8 @@ function IniciarMateria() {
         Nombre: $('#txtNombre').val(''),
         Costo: $('#txtCosto').val(''),
         Descripcion: $('#txtDescripcion').val('')
+        
+        $('#portfolioModal1').modal('show');
     }
 }
 

@@ -67,6 +67,7 @@
                         <tr class="table-secondary">
                            
                             <th style="display:none;"> IdAlumnoMateria </th>              
+                            <th style="display:none;"> Quitar </th>              
                             <th class="text-center"> Nombre </th>
                             <th class="text-center"> Costo </th>
  
@@ -92,6 +93,11 @@
                         }
                     </tbody>
                 </table>
+                <div class="form-group col-md-12">
+                    <div class="text-right">   
+                        <a class="btn btn-danger" href="@Url.Action("Index", "AlumnoMateria", new { IdAlumno = Model.Alumno.IdAlumno })"> Regresar </a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -160,7 +166,7 @@
                                 {
                                     <tr>
 
-                                        <td> @alumnoMateria1.IdAlumnoMateria </td>
+                                        <td style="display:none"> @alumnoMateria1.IdAlumnoMateria </td>
 
                                         <td class="text-center">
                                             <input type="checkbox" value="@alumnoMateria1.Materia.IdMateria" name="Materiasasignadas">

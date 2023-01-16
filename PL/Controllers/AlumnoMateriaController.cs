@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Modelo;
 
 namespace PL.Controllers
 {
@@ -61,34 +62,34 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public ActionResult Agregar(Modelo.AlumnoMateria alumnomateria1)
+        public ActionResult Agregar(Modelo.AlumnoMateria alumnoMateria, List<int> Materiasasignadas)
         {
-            Modelo.Result result = new Modelo.Result();
+            Modelo.Result result1 = new Modelo.Result();
+       
 
-            if (alumnomateria1.Materiasasignadas != null)
+            if (alumnoMateria.Materiasasignadas != null)
             {
-                foreach (string IdMateria in alumnomateria1.AlumnosMaterias)
+                foreach(int IdMateria in Materiasasignadas)
                 {
-                    Modelo.AlumnoMateria alumnoMateriaAgregar = new Modelo.AlumnoMateria();
+                   // Modelo.AlumnoMateria alumnoMateriaAgregar = new Modelo.AlumnoMateria();
 
-                    alumnoMateriaAgregar.Alumno = new Modelo.Alumno();
-                    alumnoMateriaAgregar.Alumno.IdAlumno = alumnomateria1.Alumno.IdAlumno;
+                    //alumnoMateriaAgregar.Alumno = new Modelo.Alumno();
+                    alumnoMateria.IdAlumno = alumnoMateria.Alumno.IdAlumno;
 
-                    alumnoMateriaAgregar.Materia = new Modelo.Materia();
-                    alumnoMateriaAgregar.Materia.IdMateria = int.Parse(IdMateria);
+                    //alumnoMateriaAgregar.Materia = new Modelo.Materia();
+                    alumnoMateria.IdMateria = IdMateria;
 
-                    result = Negocio.AlumnoMateria.AgregarAlumnoMateria(alumnoMateriaAgregar);
+                    Modelo.Result result = Negocio.AlumnoMateria.AgregarAlumnoMateria(alumnoMateria);
                 }
 
-
-                result.Correct = true;
+                result1.Correct = true;
 
             }
             else
             {
-                result.Correct = false;
+                result1.Correct = false;
             }
-            return PartialView("Modal", alumnomateria1.Alumno);
+            return View("Modal");
         }
 
         public ActionResult Eliminar(int IdAlumnoMateria, int IdAlumno)
