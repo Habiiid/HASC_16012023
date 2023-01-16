@@ -65,7 +65,7 @@ namespace PL.Controllers
             {
                 foreach (Modelo.AlumnoMateria materiacosto in alumnoMateria.AlumnosMaterias)
                 {
-                    //total = total + materiacosto.Materia.Costo;
+                    total = total + materiacosto.Materia.Costo;
                 }
             }
             ViewBag.Correct = true;
